@@ -16,20 +16,16 @@ class AuthRepository {
   // PATIENT - REQUEST OTP
   // =========================
 
-  Future<String> requestPatientOtp({
-    required String email,
-  }) async {
-    final response = await apiClient.post(
-      ApiConstants.patientRequestOtp,
-      data: {
-        'email': email.trim().toLowerCase(),
-      },
-    );
-
-    final data = response.data as Map<String, dynamic>;
-
-    return data['demoOtp']?.toString() ?? '';
-  }
+  Future<void> requestPatientOtp({
+  required String email,
+}) async {
+  await apiClient.post(
+    ApiConstants.patientRequestOtp,
+    data: {
+      'email': email.trim().toLowerCase(),
+    },
+  );
+}
 
   // =========================
   // PATIENT - VERIFY OTP
