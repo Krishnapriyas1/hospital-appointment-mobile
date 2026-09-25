@@ -14,11 +14,6 @@ class AppointmentController extends GetxController {
   final errorMessage = ''.obs;
 
   final appointments = <AppointmentModel>[].obs;
-
-  // ============================================================
-  // LOAD MY APPOINTMENTS
-  // ============================================================
-
   Future<void> loadMyAppointments() async {
     isLoading.value = true;
     errorMessage.value = '';
@@ -34,10 +29,7 @@ class AppointmentController extends GetxController {
     }
   }
 
-  // ============================================================
-  // BOOK APPOINTMENT
-  // ============================================================
-
+  //BOOK APPOINTMENT 
   Future<bool> bookAppointment({
     required String doctorId,
     required DateTime date,
@@ -72,10 +64,7 @@ class AppointmentController extends GetxController {
     }
   }
 
-  // ============================================================
   // CANCEL APPOINTMENT
-  // ============================================================
-
   Future<bool> cancelAppointment(String id) async {
     if (isLoading.value) {
       return false;
@@ -100,10 +89,7 @@ class AppointmentController extends GetxController {
     }
   }
 
-  // ============================================================
   // UPCOMING APPOINTMENTS
-  // ============================================================
-
   List<AppointmentModel> get upcomingAppointments {
     final now = DateTime.now();
 
@@ -131,10 +117,7 @@ class AppointmentController extends GetxController {
     return result;
   }
 
-  // ============================================================
   // PAST APPOINTMENTS
-  // ============================================================
-
   List<AppointmentModel> get pastAppointments {
     final now = DateTime.now();
 
@@ -209,10 +192,7 @@ class AppointmentController extends GetxController {
     );
   }
 
-  // ============================================================
   // ERROR MESSAGE
-  // ============================================================
-
   String _getErrorMessage(Object error) {
     return error
         .toString()

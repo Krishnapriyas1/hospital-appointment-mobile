@@ -26,27 +26,15 @@ class _PatientHomePageState extends State<PatientHomePage> {
     _loadAppointments();
   }
 
-  // ============================================================
   // LOAD APPOINTMENTS
-  // ============================================================
-
   Future<void> _loadAppointments() async {
     await appointmentController.loadMyAppointments();
   }
-
-  // ============================================================
-  // BUILD
-  // ============================================================
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F9FC),
-
-      // ==========================================================
-      // APP BAR
-      // ==========================================================
-
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -85,11 +73,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
           ),
         ],
       ),
-
-      // ==========================================================
-      // BODY
-      // ==========================================================
-
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: _loadAppointments,
@@ -99,10 +82,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ==================================================
-                // WELCOME
-                // ==================================================
-
                 const Text(
                   'Welcome 👋',
                   style: TextStyle(
@@ -123,11 +102,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 ),
 
                 const SizedBox(height: 24),
-
-                // ==================================================
-                // SEARCH
-                // ==================================================
-
                 TextField(
                   readOnly: true,
                   onTap: () async {
@@ -150,11 +124,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 ),
 
                 const SizedBox(height: 28),
-
-                // ==================================================
-                // QUICK ACTIONS
-                // ==================================================
-
                 const Text(
                   'Quick Actions',
                   style: TextStyle(
@@ -174,10 +143,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
                         title: 'Find Doctor',
                         onTap: () async {
                           await Get.toNamed('/doctors');
-
-                          // IMPORTANT:
-                          // When the patient books an appointment
-                          // and comes back, reload appointments.
                           await _loadAppointments();
                         },
                       ),
@@ -201,11 +166,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 ),
 
                 const SizedBox(height: 28),
-
-                // ==================================================
-                // UPCOMING APPOINTMENT
-                // ==================================================
-
                 const Text(
                   'Upcoming Appointment',
                   style: TextStyle(
@@ -221,18 +181,14 @@ class _PatientHomePageState extends State<PatientHomePage> {
                   final appointments =
                       appointmentController.appointments;
 
-                  // ------------------------------------------------
                   // LOADING
-                  // ------------------------------------------------
 
                   if (appointmentController.isLoading.value &&
                       appointments.isEmpty) {
                     return _loadingAppointmentCard();
                   }
 
-                  // ------------------------------------------------
                   // USE CONTROLLER'S UPCOMING APPOINTMENTS
-                  // ------------------------------------------------
 
                   final upcomingAppointments =
                       appointmentController.upcomingAppointments;
@@ -251,10 +207,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 }),
 
                 const SizedBox(height: 28),
-
-                // ==================================================
-                // POPULAR CATEGORIES
-                // ==================================================
 
                 const Text(
                   'Popular Categories',
@@ -296,11 +248,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
           ),
         ),
       ),
-
-      // ==========================================================
-      // BOTTOM NAVIGATION
-      // ==========================================================
-
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         onTap: (index) async {
@@ -334,11 +281,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
       ),
     );
   }
-
-  // ============================================================
-  // UPCOMING APPOINTMENT CARD
-  // ============================================================
-
   Widget _upcomingAppointmentCard(
     AppointmentModel appointment,
   ) {
@@ -377,10 +319,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ========================================================
-          // DOCTOR INFORMATION
-          // ========================================================
-
           Row(
             children: [
               CircleAvatar(
@@ -428,11 +366,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
                   ],
                 ),
               ),
-
-              // ====================================================
-              // STATUS
-              // ====================================================
-
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,
@@ -459,11 +392,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
           const Divider(),
 
           const SizedBox(height: 12),
-
-          // ========================================================
-          // DATE & TIME
-          // ========================================================
-
           Row(
             children: [
               const Icon(
@@ -501,11 +429,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
           ),
 
           const SizedBox(height: 16),
-
-          // ========================================================
-          // VIEW APPOINTMENT
-          // ========================================================
-
           SizedBox(
             width: double.infinity,
             height: 42,
@@ -524,11 +447,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
       ),
     );
   }
-
-  // ============================================================
-  // STATUS BACKGROUND COLOR
-  // ============================================================
-
   Color _statusBackgroundColor(String status) {
     switch (status.toLowerCase()) {
       case 'confirmed':
@@ -547,11 +465,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
         return Colors.green.shade50;
     }
   }
-
-  // ============================================================
-  // STATUS TEXT COLOR
-  // ============================================================
-
   Color _statusTextColor(String status) {
     switch (status.toLowerCase()) {
       case 'confirmed':
@@ -571,10 +484,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
     }
   }
 
-  // ============================================================
-  // LOADING APPOINTMENT CARD
-  // ============================================================
-
   Widget _loadingAppointmentCard() {
     return Container(
       width: double.infinity,
@@ -588,12 +497,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
       ),
     );
   }
-
-  // ============================================================
-  // EMPTY APPOINTMENT CARD
-  // ============================================================
-
-  Widget _emptyAppointmentCard() {
+   Widget _emptyAppointmentCard() {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(18),
@@ -648,11 +552,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
       ),
     );
   }
-
-  // ============================================================
-  // ACTION CARD
-  // ============================================================
-
   Widget _actionCard({
     required IconData icon,
     required String title,
@@ -698,11 +597,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
       ),
     );
   }
-
-  // ============================================================
-  // CATEGORY CARD
-  // ============================================================
-
   Widget _categoryCard({
     required IconData icon,
     required String title,
@@ -736,10 +630,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
       ),
     );
   }
-
-  // ============================================================
-  // LOGOUT
-  // ============================================================
 
   Future<void> _showLogoutDialog() async {
     final confirmed = await Get.dialog<bool>(
