@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hospital_appointment_mobile/features/appointment/controllers/appointment_controller.dart';
 import 'package:hospital_appointment_mobile/features/appointment/data/appointment_repository.dart';
+import 'package:hospital_appointment_mobile/features/auth/presentation/pages/starting_page.dart';
 import 'package:hospital_appointment_mobile/features/doctor/controllers/doctor_appointment_controller.dart';
 import 'package:hospital_appointment_mobile/features/doctor/data/doctor_appointment_repository.dart';
 import 'package:hospital_appointment_mobile/features/doctor/presentation/pages/doctor_appointment_details_page.dart';
@@ -65,12 +66,16 @@ class HospitalAppointmentApp extends StatelessWidget {
 
       initialRoute: '/',
 
-      getPages: [
-        // ROLE SELECTION
-        GetPage(
-          name: '/',
-          page: () => const RoleSelectionPage(),
-        ), // RoleSelectionPage()
+getPages: [
+  GetPage(
+    name: '/',
+    page: () =>  StartingPage(),
+  ),
+
+  GetPage(
+    name: '/roleselecting',
+    page: () => const RoleSelectionPage(),
+  ),
         // PATIENT LOGIN
         GetPage(name: '/patient-login', page: () => const PatientLoginPage()),
 
