@@ -1,3 +1,22 @@
+class DoctorAvailability {
+  final DateTime date;
+  final List<String> slots;
+
+  DoctorAvailability({
+    required this.date,
+    required this.slots,
+  });
+
+  factory DoctorAvailability.fromJson(Map<String, dynamic> json) {
+    return DoctorAvailability(
+      date: DateTime.parse(json['date'].toString()),
+      slots: (json['slots'] as List<dynamic>? ?? [])
+          .map((slot) => slot.toString())
+          .toList(),
+    );
+  }
+}
+
 class DoctorModel {
   final String id;
   final String name;
@@ -9,6 +28,7 @@ class DoctorModel {
   final String phone;
   final String? categoryId;
   final String? categoryName;
+  final List<DoctorAvailability> availability;
 
   DoctorModel({
     required this.id,
@@ -21,10 +41,14 @@ class DoctorModel {
     required this.phone,
     this.categoryId,
     this.categoryName,
+    this.availability = const [],
   });
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) {
     final category = json['category'];
+
+    final availabilityJson =
+        json['availability'] as List<dynamic>? ?? [];
 
     return DoctorModel(
       id: json['_id']?.toString() ?? '',
@@ -41,6 +65,13 @@ class DoctorModel {
           : category?.toString(),
       categoryName:
           category is Map ? category['name']?.toString() : null,
+      availability: availabilityJson
+          .map(
+            (item) => DoctorAvailability.fromJson(
+              item as Map<String, dynamic>,
+            ),
+          )
+          .toList(),
     );
   }
 }

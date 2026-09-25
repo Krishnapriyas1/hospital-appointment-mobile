@@ -13,32 +13,25 @@ class DoctorRepository {
     String? category,
     String? search,
   }) async {
-    final queryParameters = <String, dynamic>{
-      'page': 1,
-      'limit': 50,
-    };
-
-    if (category != null && category.isNotEmpty) {
-      queryParameters['category'] = category;
-    }
-
-    if (search != null && search.trim().isNotEmpty) {
-      queryParameters['search'] = search.trim();
-    }
-
     final response = await apiClient.get(
       ApiConstants.doctors,
-      queryParameters: queryParameters,
+      queryParameters: {
+        if (category != null && category.isNotEmpty)
+          'category': category,
+        if (search != null && search.isNotEmpty)
+          'search': search,
+      },
     );
 
     final data = response.data as Map<String, dynamic>;
 
-    final doctorsJson = data['doctors'] as List<dynamic>? ?? [];
+    final doctorsJson =
+        data['doctors'] as List<dynamic>? ?? [];
 
     return doctorsJson
         .map(
-          (json) => DoctorModel.fromJson(
-            json as Map<String, dynamic>,
+          (item) => DoctorModel.fromJson(
+            item as Map<String, dynamic>,
           ),
         )
         .toList();

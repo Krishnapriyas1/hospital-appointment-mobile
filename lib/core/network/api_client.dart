@@ -1,8 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:hospital_appointment_mobile/core/constants/api_constant.dart';
+import 'package:hospital_appointment_mobile/core/storage/token_storage.dart';
 
 class ApiClient {
   late final Dio dio;
+
+  final TokenStorage tokenStorage = TokenStorage();
 
   ApiClient() {
     dio = Dio(
@@ -15,7 +20,54 @@ class ApiClient {
         },
       ),
     );
+
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        // ===============================
+        // ADD AUTH TOKEN
+        // ===============================
+
+        onRequest: (options, handler) async {
+          final token = await tokenStorage.getToken();
+
+          debugPrint(
+            'API REQUEST: ${options.method} ${options.uri}',
+          );
+
+          debugPrint(
+            'TOKEN EXISTS: ${token != null && token.isNotEmpty}',
+          );
+
+          if (token != null && token.isNotEmpty) {
+            options.headers['Authorization'] =
+                'Bearer $token';
+          }
+
+          handler.next(options);
+        },
+
+        // ===============================
+        // API ERROR
+        // ===============================
+
+        onError: (error, handler) {
+          debugPrint(
+            'API ERROR STATUS: ${error.response?.statusCode}',
+          );
+
+          debugPrint(
+            'API ERROR RESPONSE: ${error.response?.data}',
+          );
+
+          handler.next(error);
+        },
+      ),
+    );
   }
+
+  // ===============================
+  // GET
+  // ===============================
 
   Future<Response> get(
     String path, {
@@ -27,6 +79,10 @@ class ApiClient {
     );
   }
 
+  // ===============================
+  // POST
+  // ===============================
+
   Future<Response> post(
     String path, {
     dynamic data,
@@ -36,6 +92,10 @@ class ApiClient {
       data: data,
     );
   }
+
+  // ===============================
+  // PUT
+  // ===============================
 
   Future<Response> put(
     String path, {
@@ -47,6 +107,10 @@ class ApiClient {
     );
   }
 
+  // ===============================
+  // PATCH
+  // ===============================
+
   Future<Response> patch(
     String path, {
     dynamic data,
@@ -56,6 +120,10 @@ class ApiClient {
       data: data,
     );
   }
+
+  // ===============================
+  // DELETE
+  // ===============================
 
   Future<Response> delete(
     String path, {
