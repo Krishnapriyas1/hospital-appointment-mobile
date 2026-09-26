@@ -37,10 +37,6 @@ class AppointmentRepository {
     );
   }
 
-  // ============================================================
-  // PATIENT - GET MY APPOINTMENTS
-  // ============================================================
-
   Future<List<AppointmentModel>> getMyAppointments() async {
     final response = await apiClient.get(
       '${ApiConstants.appointments}/my',
@@ -59,11 +55,6 @@ class AppointmentRepository {
         )
         .toList();
   }
-
-  // ============================================================
-  // PATIENT - CANCEL APPOINTMENT
-  // ============================================================
-
   Future<void> cancelAppointment(
     String id,
   ) async {
@@ -71,11 +62,6 @@ class AppointmentRepository {
       ApiConstants.cancelAppointment(id),
     );
   }
-
-  // ============================================================
-  // DOCTOR - GET APPOINTMENTS
-  // ============================================================
-
   Future<List<AppointmentModel>>
       getDoctorAppointments() async {
     final response = await apiClient.get(

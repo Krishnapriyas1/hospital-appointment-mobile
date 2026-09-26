@@ -1,5 +1,6 @@
 class ApiConstants {
-  static const String baseUrl = 'http://localhost:5001/api';
+  // static const String baseUrl = 'http://localhost:5001/api';
+  static const String baseUrl = 'https://hospital-appointment-backend-2w5k.onrender.com/api';
 
 
   static const String patientRequestOtp =

@@ -12,10 +12,6 @@ class AuthRepository {
     required this.tokenStorage,
   });
 
-  // =========================
-  // PATIENT - REQUEST OTP
-  // =========================
-
   Future<void> requestPatientOtp({
   required String email,
 }) async {
@@ -26,11 +22,6 @@ class AuthRepository {
     },
   );
 }
-
-  // =========================
-  // PATIENT - VERIFY OTP
-  // =========================
-
   Future<UserModel> verifyPatientOtp({
     required String email,
     required String otp,
@@ -56,11 +47,6 @@ class AuthRepository {
 
     return user;
   }
-
-  // =========================
-  // DOCTOR LOGIN
-  // =========================
-
   Future<UserModel> doctorLogin({
     required String username,
     required String password,
@@ -86,11 +72,6 @@ class AuthRepository {
 
     return user;
   }
-
-
-  // =========================
-  // LOGOUT
-  // =========================
 
   Future<void> logout() async {
     await tokenStorage.clear();
